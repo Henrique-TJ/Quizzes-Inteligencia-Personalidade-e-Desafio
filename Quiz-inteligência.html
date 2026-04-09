@@ -24,15 +24,13 @@ body {
 }
 
 button {
-    display: block;
     width: 100%;
     margin: 10px 0;
     padding: 12px;
-    border: none;
-    border-radius: 8px;
     background: #667eea;
     color: white;
-    cursor: pointer;
+    border: none;
+    border-radius: 8px;
 }
 </style>
 </head>
@@ -55,74 +53,55 @@ const quiz = [
         correct: 2
     },
     {
-        question: "Quanto é 12 x 8?",
-        answers: ["96", "88", "108", "92"],
-        correct: 0
+        question: "Quanto é 15 x 6?",
+        answers: ["80", "90", "85", "95"],
+        correct: 1
     },
     {
-        question: "Metade de 100 + 50 é:",
-        answers: ["75", "100", "50", "25"],
-        correct: 1
+        question: "Se você tem 10 e perde 4, fica com:",
+        answers: ["6", "5", "4", "7"],
+        correct: 0
     }
 ];
 
-let current = 0;
-let score = 0;
+let current=0,score=0;
 
-function loadQuestion() {
-    const q = quiz[current];
-    document.getElementById("question").innerText = q.question;
+function loadQuestion(){
+    let q=quiz[current];
+    question.innerText=q.question;
+    answers.innerHTML="";
 
-    const answersDiv = document.getElementById("answers");
-    answersDiv.innerHTML = "";
-
-    q.answers.forEach((a, i) => {
-        const btn = document.createElement("button");
-        btn.innerText = a;
-        btn.onclick = () => {
-            if (i === q.correct) score++;
+    q.answers.forEach((a,i)=>{
+        let b=document.createElement("button");
+        b.innerText=a;
+        b.onclick=()=>{
+            if(i===q.correct) score++;
             current++;
-            if (current < quiz.length) loadQuestion();
-            else showResult();
-        };
-        answersDiv.appendChild(btn);
+            current<quiz.length?loadQuestion():showResult();
+        }
+        answers.appendChild(b);
     });
 }
 
-function showResult() {
-    let msg = "";
+function showResult(){
+    let r = score<=1?"😅 Abaixo da média":score==2?"🙂 Na média":"🔥 Acima da média!";
 
-    if (score <= 1) msg = "😅 Abaixo da média";
-    else if (score == 2) msg = "🙂 Na média";
-    else msg = "🔥 Acima da média!";
-
-    document.getElementById("question").style.display = "none";
-    document.getElementById("answers").style.display = "none";
-
-    document.getElementById("result").innerHTML = `
-        Você acertou ${score}/3<br><br>${msg}
-        <br><br>
-        <button onclick="share()">📲 Compartilhar</button>
-    `;
+    question.style.display="none";
+    answers.style.display="none";
+    result.innerHTML = `Você acertou ${score}/3<br><br>${r}
+    <br><br><button onclick="share()">📲 Compartilhar</button>`;
 }
 
-function share() {
-    const text = `Eu fiz ${score}/3 no teste de inteligência 🤯`;
-    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`);
+function share(){
+    window.open(`https://wa.me/?text=${encodeURIComponent("Fiz o teste de inteligência!")}`);
 }
 
 loadQuestion();
 </script>
 
-<!-- ANÚNCIO (seguro) -->
 <div style="position:fixed;bottom:0;width:100%;background:#eee;padding:10px;">
 🔵 Espaço para anúncio
 </div>
 
-</body>
-</html>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
 </body>
 </html>
