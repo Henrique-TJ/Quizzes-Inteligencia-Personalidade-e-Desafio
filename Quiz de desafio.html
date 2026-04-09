@@ -99,7 +99,13 @@ function showResult() {
     document.getElementById("answers").style.display = "none";
     document.getElementById("result").innerText = `Você acertou ${score}/3\n${result}`;
 }
+  const shareBtn = document.getElementById("shareBtn");
+    shareBtn.style.display = "block";
 
+    shareBtn.onclick = () => {
+        const text = `Eu fiz ${score}/5 no teste "Você é mais inteligente que a média?" 🤯\nTente você também!`;
+        const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+        window.open(url, "_blank");
 loadQuestion();
 </script>
 
