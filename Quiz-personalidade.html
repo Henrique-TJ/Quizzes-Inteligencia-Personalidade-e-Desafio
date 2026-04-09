@@ -41,7 +41,7 @@ button {
 <h1>❤️ Que tipo de pessoa você é?</h1>
 
 <div class="box">
-    <h2 id="question"></h2>
+    <h2 id="question">Carregando...</h2>
     <div id="answers"></div>
     <h3 id="result"></h3>
 </div>
@@ -91,23 +91,20 @@ function loadQuestion() {
 function showResult() {
     let result = "";
 
-    if (score <= 4) result = "🌿 Você é uma pessoa tranquila e observadora";
+    if (score <= 4) result = "🌿 Você é tranquila e observadora";
     else if (score <= 7) result = "😊 Você é sociável e equilibrada";
     else result = "🔥 Você é aventureira e cheia de energia!";
 
     document.getElementById("question").style.display = "none";
     document.getElementById("answers").style.display = "none";
-    document.getElementById("result").innerText = result;
+
+    document.getElementById("result").innerHTML = `
+        ${result}
+        <br><br>
+        <button onclick="shareResult()">📲 Compartilhar no WhatsApp</button>
+    `;
 }
 
-  const shareBtn = document.getElementById("shareBtn");
-    shareBtn.style.display = "block";
-
-    shareBtn.onclick = () => {
-        const text = `Eu fiz ${score}/5 no teste "Você é mais inteligente que a média?" 🤯\nTente você também!`;
-        const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
-        window.open(url, "_blank");
-    
 loadQuestion();
 </script>
 
