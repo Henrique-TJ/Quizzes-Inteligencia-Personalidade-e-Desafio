@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Que tipo de pessoa você é?</title>
+<title>Personalidade</title>
 
 <style>
 body {
@@ -11,6 +11,7 @@ body {
     text-align: center;
     color: white;
     padding: 30px;
+    padding-bottom: 90px;
 }
 
 .box {
@@ -23,15 +24,13 @@ body {
 }
 
 button {
-    display: block;
     width: 100%;
     margin: 10px 0;
     padding: 12px;
-    border: none;
-    border-radius: 8px;
     background: #e91e63;
     color: white;
-    cursor: pointer;
+    border: none;
+    border-radius: 8px;
 }
 </style>
 </head>
@@ -50,94 +49,53 @@ button {
 const quiz = [
     {
         question: "Você prefere:",
-        answers: ["Ficar em casa", "Sair com amigos", "Explorar coisas novas"],
-        points: [1, 2, 3]
+        answers: ["Casa", "Amigos", "Aventura"],
+        points: [1,2,3]
     },
     {
-        question: "Como reage a problemas?",
-        answers: ["Penso muito", "Peço ajuda", "Resolvo rápido"],
-        points: [1, 2, 3]
-    },
-    {
-        question: "O que te define?",
-        answers: ["Calmo", "Sociável", "Aventureiro"],
-        points: [1, 2, 3]
+        question: "Você é:",
+        answers: ["Calmo", "Sociável", "Agitado"],
+        points: [1,2,3]
     }
 ];
 
-let current = 0;
-let score = 0;
+let current=0, score=0;
 
-function loadQuestion() {
-    const q = quiz[current];
-    document.getElementById("question").innerText = q.question;
+function loadQuestion(){
+    let q=quiz[current];
+    question.innerText=q.question;
+    answers.innerHTML="";
 
-    const answersDiv = document.getElementById("answers");
-    answersDiv.innerHTML = "";
-
-    q.answers.forEach((a, i) => {
-        const btn = document.createElement("button");
-        btn.innerText = a;
-        btn.onclick = () => {
-            score += q.points[i];
+    q.answers.forEach((a,i)=>{
+        let b=document.createElement("button");
+        b.innerText=a;
+        b.onclick=()=>{
+            score+=q.points[i];
             current++;
-            if (current < quiz.length) loadQuestion();
-            else showResult();
-        };
-        answersDiv.appendChild(btn);
+            current<quiz.length?loadQuestion():showResult();
+        }
+        answers.appendChild(b);
     });
 }
 
-function showResult() {
-    let result = "";
+function showResult(){
+    let r = score<=2?"🌿 Tranquila":score<=4?"😊 Sociável":"🔥 Intensa";
 
-    if (score <= 4) result = "🌿 Você é tranquila e observadora";
-    else if (score <= 7) result = "😊 Você é sociável e equilibrada";
-    else result = "🔥 Você é aventureira e cheia de energia!";
-
-    document.getElementById("question").style.display = "none";
-    document.getElementById("answers").style.display = "none";
-    document.getElementById("result").innerHTML = `
-        ${result}
-        <br><br>
-        <button onclick="shareResult()">📲 Compartilhar no WhatsApp</button>
-    `;
+    question.style.display="none";
+    answers.style.display="none";
+    result.innerHTML = `${r}<br><br><button onclick="share()">📲 Compartilhar</button>`;
 }
 
-<style>
-#ad-bottom {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: white;
-    padding: 8px;
-    text-align: center;
-    box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
-    z-index: 999;
+function share(){
+    window.open(`https://wa.me/?text=${encodeURIComponent("Fiz o teste de personalidade!")}`);
 }
 
-/* Evita que o anúncio cubra o conteúdo */
-body {
-    padding-bottom: 90px;
-}
-</style>
-
-<div id="ad-bottom">
-
-    <!-- ANÚNCIO ADSENSE -->
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="SEU-CODIGO"
-         data-ad-slot="XXXX"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
-
-</div>
-
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
+loadQuestion();
 </script>
+
+<div style="position:fixed;bottom:0;width:100%;background:#eee;padding:10px;">
+🔵 Espaço para anúncio
+</div>
 
 </body>
 </html>
